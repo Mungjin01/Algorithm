@@ -1,15 +1,21 @@
 function solution(players, callings) {
-    let maps = {};
-    for(let i = 0; i < players.length; i++){
-        maps[players[i]] = i;
-    }
-    callings.forEach(v => {
-        let num = maps[v];
-        let temp = players[num-1];
-        players[num-1] = v;
-        players[num] = temp;
-        maps[v]--;
-        maps[players[num]]++;
-    })
-    return Object.entries(maps).sort((a,b) => a[1] - b[1]).map(v => v[0]);
+    const playerMap = {};
+    
+    for(let i=0; i< players.length; i++)
+        {
+            playerMap[players[i]] = i;
+        }
+    for(let i = 0; i< callings.length; i++)
+        {
+            const idx = playerMap[callings[i]];
+            const temp = players[idx-1];
+            
+            players[idx - 1] = callings[i];
+            players[idx] = temp;
+            
+            playerMap[callings[i]] = idx - 1;
+            playerMap[temp] = idx;
+        }
+    
+        return players
 }
